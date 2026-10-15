@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Miguel Gea">
+  <meta name="keywords" content="Etnografía, Diseño de Interacción, UX">
+  <title>EtnograUX v1.0 — Estudio Etnográfico para Diseño de Interacción & UX</title>
+
+  <!-------------------------------------------->
+  <!-----   EtnograUX 1.0                    -->
+  <!------ https://github.com/mgea/etnograUX -->
+  <!-----  15/06/2026                         -->
+  
+
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#FAF8F5',
+              100: '#E8E2D5',
+              200: '#DFCFC0',
+              500: '#D96B43',
+              800: '#2C2623',
+              900: '#1A1A1A'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #FAF8F5; color: #1A1A1A; }
+    .transition-flat { transition: all 0.15s ease-in-out; }
+
+    #view-project-visualizer p,
+    #view-project-visualizer span,
+    #view-project-visualizer li {
+      font-size: 0.925rem;
+      line-height: 1.6;
+    }
+
+    #view-project-visualizer h4 { font-size: 0.85rem; }
+
+    /* =========================================================
+   REGLAS DE IMPRESIÓN OPTIMIZADA - FICHA ÚNICA (BENTO A4 VERTICAL)
+   ========================================================= */
+   /* =========================================================
+   REGLAS DE IMPRESIÓN OPTIMIZADA A4 VERTICAL (BENTO DENSIDAD ALTA)
+   ========================================================= */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 6mm 8mm; /* Márgenes de seguridad para evitar cortes */
+  }
+
+  /* Ocultar elementos de navegación y UI web */
+  header, footer, #notification-banner, button, input, select, 
+  #json-modal, #image-modal, #browser-back, .no-print,
+  #ethno-galeria-container > div:first-child,
+  .open-case-btn {
+    display: none !important;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    color: #1A1A1A !important;
+    font-size: 7.5pt !important;
+    line-height: 1.15 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* CONTENEDOR PRINCIPAL BENTO - 1 SOLO FOLIO GARANTIZADO */
+  #view-project-visualizer:not(.hidden) {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    max-height: 262mm !important; /* Límite estricto para A4 portrait */
+    height: 262mm !important;
+    overflow: hidden !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Secciones Bento compactas */
+  #view-project-visualizer > section {
+    background-color: #FAF8F5 !important;
+    border: 1px solid #1A1A1A !important;
+    border-radius: 4px !important;
+    padding: 5px 8px !important;
+    box-shadow: none !important;
+  }
+
+  /* 1. Cabecera y Caso */
+  #view-project-visualizer h2 { 
+    font-size: 10.5pt !important; 
+    font-weight: 800 !important; 
+    line-height: 1.1 !important; 
+    margin: 0 !important; 
+    color: #1A1A1A !important;
+  }
+
+  #view-project-visualizer h3 { 
+    font-size: 8.5pt !important; 
+    font-weight: 700 !important; 
+    margin-bottom: 2px !important; 
+    color: #D96B43 !important;
+  }
+
+  #view-project-visualizer h4 { 
+    font-size: 7pt !important; 
+    font-weight: 700 !important; 
+  }
+
+  #view-project-visualizer p, 
+  #view-project-visualizer span, 
+  #view-project-visualizer li { 
+    font-size: 7pt !important; 
+    line-height: 1.1 !important; 
+  }
+
+  /* 2. Matriz de Análisis Cualitativo (Disposición en Rejilla Compacta) */
+  #view-project-visualizer > section:nth-of-type(2) .grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 3px !important;
+  }
+
+  #view-project-visualizer > section:nth-of-type(2) .bg-white {
+    padding: 3px 6px !important;
+    border: 1px solid #DFCFC0 !important;
+    border-radius: 3px !important;
+  }
+
+  /* 3. Evidencias Gráficas Reducidas */
+  #ethno-galeria-container {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px !important;
+  }
+
+  #ethno-galeria-container > div {
+    padding: 2px !important;
+    border: 1px solid #DFCFC0 !important;
+    border-radius: 4px !important;
+  }
+
+  #ethno-galeria-container div.min-h-\[180px\] {
+    min-height: 0 !important;
+    height: 22mm !important;
+  }
+
+  #ethno-galeria-container img {
+    max-height: 20mm !important;
+    width: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* 4. Bloque de Evaluaciones y Revisiones Ultra-Compacto */
+  #view-project-visualizer > section:nth-of-type(4) {
+    padding: 4px 8px !important;
+  }
+
+  #view-project-visualizer > section:nth-of-type(4) .grid-cols-3 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px !important;
+  }
+
+  #view-project-visualizer > section:nth-of-type(4) .bg-white {
+    padding: 2px 5px !important;
+  }
+
+  #ethno-eval-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+  }
+
+  #ethno-eval-list > div {
+    padding: 2px 5px !important;
+    border: 1px solid #DFCFC0 !important;
+    border-radius: 3px !important;
+  }
+
+  /* 5. Proceso y Metodología (3 columnas reducidas) */
+  #design-process-container {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px !important;
+  }
+
+  #design-process-container > div {
+    padding: 3px 6px !important;
+  }
+
+  /* CATÁLOGO DE CASOS (3x3 Mantenido) */
+  #view-project-browser:not(.hidden) { display: block !important; }
+  #view-project-browser > div:first-child { display: none !important; }
+
+  .browser-print-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 2px solid #D96B43 !important;
+    padding-bottom: 3px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .browser-print-header img {
+    display: block !important;
+    max-height: 8mm !important;
+    width: auto !important;
+  }
+
+  #browser-cards {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  #browser-cards article {
+    border: 1px solid #DFCFC0 !important;
+    border-radius: 6px !important;
+    padding: 6px !important;
+    background: #FAF8F5 !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    height: 76mm !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+}
+
+
+
+
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col font-sans antialiased">
+
+  <!-- ==================== HEADER PRINCIPAL ==================== -->
+  <header class="bg-[#1A1A1A] text-white sticky top-0 z-40 border-b-4 border-[#D96B43] shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      
+      <!-- Logo y Título -->
+      <div class="flex items-center space-x-3.5 cursor-pointer" onclick="showBrowserView()">
+        <div class="w-11 h-11 bg-white rounded-lg overflow-hidden flex items-center justify-center p-1 border border-white/20 shrink-0 shadow-xs">
+          <img src="logo_diu25_mini.png" alt="DIU Logo" class="w-full h-full object-contain" 
+               onerror="this.onerror=null; this.src='https://placehold.co/100x100/D96B43/FFFFFF?text=DIU';">
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-bold font-display tracking-tight leading-tight text-white">
+              EtnograUX
+            </h1>
+          </div>
+          <p class="text-xs text-[#E8E2D5]/80 font-light hidden sm:block">Estudio etnográfico para Diseño de Interacción &amp; UX</p>
+        </div>
+      </div>
+
+      <!-- Barra de Acciones Principales -->
+      <div class="flex items-center space-x-2">
+        <button onclick="showBrowserView()" class="bg-[#2C2623] hover:bg-white/10 text-white font-bold text-xs px-3 py-2 rounded-lg border border-white/10 flex items-center gap-1.5 transition-flat" title="Ver catálogo">
+          <i class="fa-solid fa-grid-2 text-[#D96B43]"></i>
+          <span class="hidden md:inline">Catálogo</span>
+        </button>
+
+        <label class="bg-[#D96B43] hover:bg-[#b85431] text-white font-bold text-xs px-3 py-2 rounded-lg cursor-pointer flex items-center gap-1.5 transition-flat">
+          <i class="fa-solid fa-folder-open"></i>
+          <span class="hidden sm:inline">Abrir carpeta</span>
+          <input type="file" id="folder-input" webkitdirectory directory multiple class="hidden" onchange="handleFolderSelect(event)">
+        </label>
+
+        <label class="bg-[#E8E2D5] hover:bg-white text-[#1A1A1A] font-bold text-xs px-3 py-2 rounded-lg cursor-pointer border border-black/20 flex items-center gap-1.5 transition-flat">
+          <i class="fa-solid fa-file-import text-[#D96B43]"></i>
+          <span class="hidden sm:inline">Abrir JSON</span>
+          <input type="file" id="json-file-input" accept=".json" class="hidden" onchange="handleSingleJsonSelect(event)">
+        </label>
+
+        <!-- Botones Ver JSON / Exportar JSON -->
+        <button onclick="openJsonModal()" class="bg-[#2C2623] hover:bg-white/10 text-white font-bold text-xs px-3 py-2 rounded-lg border border-white/10 flex items-center gap-1.5 transition-flat" title="Ver y Validar JSON">
+          <i class="fa-solid fa-code text-[#D96B43]"></i>
+          <!--- <span class="hidden lg:inline">Ver JSON</span> -->
+        </button>
+
+        <button onclick="exportCurrentJson()" class="bg-[#2C2623] hover:bg-white/10 text-white font-bold text-xs px-3 py-2 rounded-lg border border-white/10 flex items-center gap-1.5 transition-flat" title="Exportar caso a JSON">
+          <i class="fa-solid fa-download text-[#D96B43]"></i>
+          <!--- <span class="hidden lg:inline">Exportar JSON</span> --->
+        </button>
+
+        <button onclick="window.print()" class="bg-[#2C2623] hover:bg-white/10 text-white font-bold text-xs px-3 py-2 rounded-lg border border-white/10 flex items-center gap-1.5 transition-flat" title="Imprimir Ficha (A4 Vertical)">
+          <i class="fa-solid fa-print text-[#D96B43]"></i>
+          <!--- <span class="hidden lg:inline">Imprimir Ficha</span> -->
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- BANNER NOTIFICACIONES -->
+  <div id="notification-banner" class="hidden bg-[#D96B43] text-white text-xs font-semibold px-4 py-2 text-center transition-flat"></div>
+
+  <!-- ==================== CONTENIDO PRINCIPAL ==================== -->
+  <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+
+    <!-- VISTA 1: CATÁLOGO / EXPLORADOR DE PROYECTOS -->
+    <div id="view-project-browser" class="space-y-6">
+      
+      <div class="bg-[#1A1A1A] text-white p-6 rounded-2xl border-b-4 border-[#D96B43] shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold font-display">Explorador de Casos Etnográficos</h2>
+          <p class="text-xs text-[#E8E2D5] mt-1">Explora, filtra y analiza las observaciones de campo en tiempo real</p>
+        </div>
+        <button onclick="printBrowserCatalog()" class="bg-[#D96B43] hover:bg-[#b85431] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-flat flex items-center gap-2 shadow-xs">
+          <i class="fa-solid fa-print"></i> Imprimir Catálogo
+        </button>
+      </div>
+
+      <!-- Barra de Filtros con Filtros por Sujeto ("Quién") y Palabras Clave -->
+      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-[#DFCFC0] shadow-xs grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-3">
+        <div class="md:col-span-3">
+          <input type="text" id="browser-search" placeholder="Buscar título, lugar u observador..." oninput="renderProjectBrowser()" class="w-full py-2.5 px-3.5 rounded-xl border border-[#DFCFC0] text-xs font-medium focus:outline-none focus:border-[#D96B43]">
+        </div>
+
+        <!-- Filtro Sujeto ("Quién") -->
+        <div class="md:col-span-2">
+          <select id="browser-person-filter" onchange="renderProjectBrowser()" class="w-full py-2.5 px-3 rounded-xl border border-[#DFCFC0] text-xs font-medium bg-white">
+            <option value="Todos">Perfil ("Quién"): Todos</option>
+            <option value="mayor">Perfil: #mayor</option>
+            <option value="joven">Perfil: #joven</option>
+            <option value="extranjero">Perfil: #extranjero</option>
+            <option value="con discapacidad">Perfil: #con discapacidad</option>
+            <option value="anciano">Perfil: #anciano</option>
+          </select>
+        </div>
+
+        <!-- Filtro Palabras Clave / Dominio -->
+        <div class="md:col-span-2">
+          <select id="browser-tag-filter" onchange="renderProjectBrowser()" class="w-full py-2.5 px-3 rounded-xl border border-[#DFCFC0] text-xs font-medium bg-white">
+            <option value="Todas">Categorías: Todas</option>
+            <option value="transporte">Transporte</option>
+            <option value="comercio">Comercio</option>
+            <option value="software">Software</option>
+            <option value="hardware">Hardware</option>
+            <option value="aparatos electrónicos">Aparatos Electrónicos</option>
+            <option value="señalética">Señalética</option>
+          </select>
+        </div>
+
+        <!-- Filtro Año -->
+        <div class="md:col-span-2">
+          <select id="browser-year-filter" onchange="renderProjectBrowser()" class="w-full py-2.5 px-3 rounded-xl border border-[#DFCFC0] text-xs font-medium bg-white">
+            <option value="Todos">Año: Todos</option>
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+          </select>
+        </div>
+
+        <!-- Ordenación -->
+        <div class="md:col-span-3">
+          <select id="browser-sort-filter" onchange="renderProjectBrowser()" class="w-full py-2.5 px-3 rounded-xl border border-[#DFCFC0] text-xs font-medium bg-white">
+            <option value="val-desc">Valoración (Mayor a Menor)</option>
+            <option value="val-asc">Valoración (Menor a Mayor)</option>
+            <option value="clasif-desc">Relevancia (Crítico primero)</option>
+           
+          </select>
+        </div>
+      </div>
+
+      <!-- Rejilla de Tarjetas -->
+      <div id="browser-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Generado dinámicamente -->
+      </div>
+
+    </div>
+
+    <!-- VISTA 2: VISUALIZADOR DETALLADO DE FICHA -->
+    <div id="view-project-visualizer" class="hidden space-y-8">
+      
+      <!-- Botón Volver y Controles -->
+      <div id="browser-back" class="flex items-center justify-between border-b border-[#DFCFC0] pb-3">
+        <button onclick="showBrowserView()" class="text-xs font-bold text-gray-600 hover:text-[#D96B43] flex items-center gap-2 transition-flat">
+          <i class="fa-solid fa-arrow-left"></i> Volver al Catálogo de Casos
+        </button>
+        <div class="flex items-center gap-2">
+          <!--- 
+          <button onclick="openJsonModal()" class="text-xs font-bold text-[#D96B43] hover:underline flex items-center gap-1">
+            <i class="fa-solid fa-code"></i> Editar JSON
+          </button>
+          --->
+          <span id="ethno-id-badge" class="text-xs font-mono font-bold bg-[#E8E2D5] text-[#1A1A1A] px-3 py-1 rounded-full border border-black/10">ID: ----</span>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 1: DATOS DE LA OBSERVACIÓN -->
+      <section class="bg-[#FAF8F5] border border-[#DFCFC0] rounded-2xl p-6 sm:p-8 space-y-4 shadow-xs">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-[#DFCFC0] pb-4">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-[#D96B43]">Estudio de Caso Etnográfico</span>
+            <h2 id="ethno-estudio-caso" class="text-2xl sm:text-3xl font-bold font-display text-[#1A1A1A] mt-1">Cargando caso...</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="ethno-fecha" class="text-xs font-bold bg-white text-gray-800 px-3 py-1.5 rounded-lg border border-[#DFCFC0]">--/--/----</span>
+            <span id="ethno-duracion" class="text-xs font-bold bg-white text-gray-800 px-3 py-1.5 rounded-lg border border-[#DFCFC0]">-- min</span>
+          </div>
+        </div>
+
+        <p id="ethno-situacion" class="text-sm font-medium text-gray-700 italic bg-white p-4 rounded-xl border border-[#DFCFC0]">--</p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+          <div class="bg-white p-3 rounded-xl border border-[#DFCFC0]">
+            <span class="text-[10px] font-bold uppercase text-gray-400 block">Observador/a</span>
+            <span id="ethno-observador" class="text-xs font-bold text-[#1A1A1A] mt-1 block">--</span>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-[#DFCFC0]">
+            <span class="text-[10px] font-bold uppercase text-gray-400 block">Lugar / Ubicación</span>
+            <span id="ethno-donde" class="text-xs font-bold text-[#1A1A1A] mt-1 block">--</span>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-[#DFCFC0]">
+            <span class="text-[10px] font-bold uppercase text-gray-400 block">Método</span>
+            <span id="ethno-metodo" class="text-xs font-bold text-[#1A1A1A] mt-1 block">--</span>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-[#DFCFC0]">
+            <span class="text-[10px] font-bold uppercase text-gray-400 block">Frecuencia</span>
+            <span id="ethno-frecuencia" class="text-xs font-bold text-[#1A1A1A] mt-1 block">--</span>
+          </div>
+        </div>
+
+        <div class="space-y-1.5 pt-2">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-gray-500">Explicación Cualitativa de la Observación</h4>
+          <p id="ethno-explicacion" class="text-sm text-gray-800 leading-relaxed bg-white p-4 rounded-xl border border-[#DFCFC0]">--</p>
+        </div>
+
+        <!--Palabras clave -->
+      <div class="space-y-1 pt-2">
+        <h4 class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Palabras Clave &amp; Dominio</h4>
+        <div id="ethno-palabras-clave-container" class="flex flex-wrap gap-1.5"></div>
+      </div>
+
+      </section>
+
+      <!-- SECCIÓN 2: MATRIZ DE ANÁLISIS CUALITATIVO -->
+      <section class="bg-[#FAF8F5] border border-[#DFCFC0] rounded-2xl p-6 sm:p-8 space-y-6 shadow-xs">
+        <div class="flex items-center gap-2 border-b border-[#DFCFC0] pb-3">
+          <div class="w-3 h-6 bg-[#D96B43] rounded-sm"></div>
+          <h3 class="text-xl sm:text-2xl font-bold font-display text-[#1A1A1A]">Análisis Cualitativo de Campo</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded-xl border border-[#DFCFC0] space-y-1">
+            <span class="text-[10px] font-bold uppercase text-[#D96B43]">¿Quién? (Sujeto &amp; Perfil)</span>
+            <p id="ethno-quien" class="text-xs text-gray-800 font-medium">--</p>
+            <div id="ethno-quien-tags" class="flex flex-wrap gap-1 pt-1"></div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-[#DFCFC0] space-y-1">
+            <span class="text-[10px] font-bold uppercase text-[#D96B43]">¿Qué? (Objetivo del Usuario)</span>
+            <p id="ethno-que" class="text-xs text-gray-800 font-medium">--</p>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-[#DFCFC0] space-y-1">
+            <span class="text-[10px] font-bold uppercase text-[#D96B43]">¿Dónde? (Entorno de Uso)</span>
+            <p id="ethno-analisis-donde" class="text-xs text-gray-800 font-medium">--</p>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-[#DFCFC0] space-y-1">
+            <span class="text-[10px] font-bold uppercase text-[#D96B43]">¿Cómo? (Estrategia de Resolución)</span>
+            <p id="ethno-como" class="text-xs text-gray-800 font-medium">--</p>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-[#DFCFC0] space-y-1 md:col-span-2">
+            <span class="text-[10px] font-bold uppercase text-[#D96B43]">¿Por qué? (Motivación Principal)</span>
+            <p id="ethno-porque" class="text-xs text-gray-800 font-medium">--</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+          <div class="bg-amber-50/60 border border-amber-200 p-4 rounded-xl space-y-2">
+            <span class="text-[10px] font-bold uppercase text-amber-900 block">Sentimientos / Emociones</span>
+            <div id="ethno-sentimientos" class="flex flex-wrap gap-1.5"></div>
+          </div>
+
+          <div class="bg-rose-50/60 border border-rose-200 p-4 rounded-xl space-y-1">
+            <span class="text-[10px] font-bold uppercase text-rose-900 block">Factor Crítico (Fricción / Barrera)</span>
+            <p id="ethno-factor-critico" class="text-xs text-rose-950 font-medium">--</p>
+          </div>
+
+          <div class="bg-emerald-50/60 border border-emerald-200 p-4 rounded-xl space-y-1">
+            <span class="text-[10px] font-bold uppercase text-emerald-900 block">Propuesta de Mejora (UX)</span>
+            <p id="ethno-como-mejorar" class="text-xs text-emerald-950 font-medium">--</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 3: DOCUMENTACIÓN GRÁFICA / EVIDENCIAS -->
+      <section class="bg-[#FAF8F5] border border-[#DFCFC0] rounded-2xl p-6 sm:p-8 space-y-4 shadow-xs">
+        <div class="flex items-center justify-between border-b border-[#DFCFC0] pb-3">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-6 bg-[#D96B43] rounded-sm"></div>
+            <h3 class="text-xl sm:text-2xl font-bold font-display text-[#1A1A1A]">Documentación Gráfica &amp; Evidencias</h3>
+          </div>
+        </div>
+
+        <div id="ethno-galeria-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <!-- Tarjetas de imágenes dinámicas -->
+        </div>
+      </section>
+
+      <!-- SECCIÓN 4: EVALUACIÓN Y TODAS LAS REVISIONES REALIZADAS -->
+      <section class="bg-[#FAF8F5] border border-[#DFCFC0] rounded-2xl p-6 sm:p-8 space-y-5 shadow-xs">
+        <div class="flex items-center justify-between border-b border-[#DFCFC0] pb-3">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-6 bg-[#D96B43] rounded-sm"></div>
+            <h3 class="text-xl sm:text-2xl font-bold font-display text-[#1A1A1A]">Evaluación &amp; Revisiones de Campo</h3>
+          </div>
+          <span id="ethno-eval-total-badge" class="text-xs font-bold bg-[#1A1A1A] text-white px-3 py-1 rounded-full">
+            0 Revisiones
+          </span>
+        </div>
+
+        <!-- Tarjetas resumen de métricas globales -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-white p-4 rounded-xl border border-[#DFCFC0] flex flex-col justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Valoración Media</span>
+            <div class="flex items-center gap-2 mt-2">
+              <span id="ethno-eval-val-num" class="font-display text-3xl font-extrabold text-[#1A1A1A]">0.0</span>
+              <div id="ethno-eval-stars" class="text-[#D96B43] text-sm"></div>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-[#DFCFC0] flex flex-col justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Relevancia del Caso</span>
+            <div class="mt-2">
+              <span id="ethno-eval-clasif-badge" class="text-xs font-bold px-2.5 py-1 rounded-md">--</span>
+              <span id="ethno-eval-clasif-num" class="text-xs text-gray-500 block mt-1 font-mono">Media: 0.0 / 3.0</span>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-[#DFCFC0] flex flex-col justify-between">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Total Evaluaciones</span>
+            <div class="mt-2">
+              <span id="ethno-eval-count" class="font-display text-3xl font-bold text-[#1A1A1A]">0</span>
+              <span class="text-xs text-gray-500">revisiones registradas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Despliegue completo de TODAS las observaciones realizadas -->
+        <div class="space-y-3 pt-2">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-gray-600">Listado Completo de Evaluaciones Registradas</h4>
+          <div id="ethno-eval-list" class="space-y-3">
+            <!-- Dinámico -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 5: PROCESO DE DISEÑO & METODOLOGÍA -->
+      <section class="bg-[#FAF8F5] border border-[#DFCFC0] rounded-2xl p-6 sm:p-8 space-y-4 shadow-xs">
+        <div class="flex items-center gap-2 border-b border-[#DFCFC0] pb-3">
+          <div class="w-3 h-6 bg-[#D96B43] rounded-sm"></div>
+          <h3 class="text-xl sm:text-2xl font-bold font-display text-[#1A1A1A]">Proceso de Diseño &amp; Metodología</h3>
+        </div>
+
+        <div id="design-process-container" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-white p-4 rounded-xl border border-[#DFCFC0] space-y-2">
+            <span class="text-[10px] font-bold uppercase text-[#D96B43] block">Inspiración &amp; Concepto</span>
+            <p id="ethno-palabra-concepto" class="text-xs text-gray-800 italic">--</p>
+            <div class="pt-2 border-t border-[#DFCFC0]/50">
+              <span class="text-[10px] font-bold text-gray-400 block">Referente Principal:</span>
+              <a id="ethno-referente-url" href="#" target="_blank" class="text-xs text-[#D96B43] hover:underline font-mono truncate block">--</a>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-[#DFCFC0] space-y-2">
+            <span class="text-[10px] font-bold uppercase text-[#D96B43] block">Marco de Trabajo (Framing)</span>
+            <p id="ethno-marco-framing" class="text-xs font-bold text-gray-800">--</p>
+            <div class="pt-2 border-t border-[#DFCFC0]/50">
+              <span class="text-[10px] font-bold text-gray-400 block">Fases del Proceso:</span>
+              <ul id="ethno-fases-list" class="text-xs text-gray-700 list-disc list-inside space-y-0.5"></ul>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-[#DFCFC0] space-y-2">
+            <span class="text-[10px] font-bold uppercase text-[#D96B43] block">Herramientas &amp; Recursos</span>
+            <div id="ethno-herramientas-list" class="space-y-2 text-xs text-gray-800"></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-[#1A1A1A] text-[#E8E2D5] border-t-4 border-[#D96B43] py-6 px-4 mt-12">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs">
+      <div class="space-y-1.5">
+        <div class="font-bold text-white text-sm tracking-wide font-display">EtnograUX v1.0</div>
+        <ul class="space-y-1 text-[#DFCFC0]">
+          <li class="flex items-center gap-1.5">
+            <i class="fa-solid fa-microscope text-[#D96B43]"></i>
+            <span>Estudio etnográfico para Diseño de Interacción &amp; UX</span> 
+                 
+            <span> <a href="https://github.com/mgea/etnograUX" target="_blank" rel="noopener noreferrer" class="hover:underline text-white"><i class="fab fa-github" aria-hidden="true"></i> Github</a></span>
+          </li>
+          <li class="flex items-center gap-1.5">
+            <i class="fa-solid fa-code text-[#D96B43]"></i>
+            <span><a href="https://mgea.github.io/DIU/#" target="_blank" rel="noopener noreferrer" class="hover:underline text-white"> Diseño de Interfaces de Usuario</a> </span>
+          </li>
+          <li class="flex items-center gap-1.5">
+            <i class="fa-solid fa-university text-[#D96B43]"></i>
+            <span>Universidad de Granada • <a href="https://etsiit.ugr.es/" target="_blank" rel="noopener noreferrer" class="hover:underline text-white"> E.T.S.I. Informática y de Telecomunicación</a></span>
+          </li>
+          <li class="flex items-center gap-1.5">
+            <i class="fab fa-creative-commons  text-[#D96B43]"></i>
+          
+            <span>EtnograUX BY <a href="https://github.com/mgea" target="_blank" rel="noopener noreferrer" class="hover:underline text-white">Miguel Gea</a> (2026)</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="text-right text-[11px] text-gray-400 border-t md:border-t-0 border-white/10 pt-3 md:pt-0 w-full md:w-auto">
+        <span>Diseño Flat Minimalista • Ficha de Trabajo de Campo</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODAL 1: EDITOR / VISOR Y VALIDADOR JSON ==================== -->
+  <div id="json-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl border border-[#DFCFC0] overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="bg-[#1A1A1A] text-white px-6 py-4 flex items-center justify-between border-b-2 border-[#D96B43]">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-code text-[#D96B43]"></i>
+          <h3 class="font-display font-bold text-base">Editor &amp; Validador JSON (`etnografia.json`)</h3>
+        </div>
+        <button onclick="closeJsonModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="p-4 bg-[#FAF8F5] flex-grow flex flex-col space-y-3 overflow-hidden">
+        <div class="flex items-center justify-between text-xs">
+          <span class="font-bold text-gray-700">Edita o pega el contenido JSON de la ficha:</span>
+          <span id="json-status-indicator" class="font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">
+            <i class="fa-solid fa-check-circle"></i> JSON Válido
+          </span>
+        </div>
+
+        <textarea id="json-modal-textarea" oninput="validateJsonInput()" class="w-full h-96 p-4 font-mono text-xs bg-[#1A1A1A] text-emerald-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#D96B43] resize-none leading-relaxed"></textarea>
+      </div>
+
+      <div class="bg-white p-4 border-t border-[#DFCFC0] flex items-center justify-between gap-3">
+        <button onclick="formatJsonText()" class="bg-[#E8E2D5] hover:bg-gray-300 text-[#1A1A1A] font-bold text-xs px-3.5 py-2 rounded-lg transition-flat flex items-center gap-1.5">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Formatear / Indentar
+        </button>
+
+        <div class="flex items-center gap-2">
+          <button onclick="closeJsonModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold text-xs px-4 py-2 rounded-lg transition-flat">Cancelar</button>
+          <button onclick="applyJsonChanges()" class="bg-[#D96B43] hover:bg-[#b85431] text-white font-bold text-xs px-4 py-2 rounded-lg transition-flat flex items-center gap-1.5">
+            <i class="fa-solid fa-check"></i> Aplicar y Renderizar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 2: VISOR DE IMÁGENES A PANTALLA COMPLETA ==================== -->
+  <div id="image-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden flex flex-col items-center justify-center p-4 transition-flat">
+    <button onclick="closeImageModal()" class="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white w-10 h-10 rounded-full flex items-center justify-center transition-flat">
+      <i class="fa-solid fa-xmark text-xl"></i>
+    </button>
+    
+    <div class="max-w-5xl max-h-[85vh] flex flex-col items-center justify-center space-y-3">
+      <img id="modal-image" src="" alt="Evidencia tamaño completo" class="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl border border-white/20">
+      <p id="modal-caption" class="text-xs sm:text-sm text-[#E8E2D5] font-medium text-center bg-black/60 px-4 py-2 rounded-md max-w-2xl"></p>
+    </div>
+  </div>
+
+  <!-- ==================== LÓGICA JAVASCRIPT COMPLETA ==================== -->
+  <script>
+    let browserCases = [];
+    let currentData = null;
+    let localImageMap = {};
+
+    // CASOS DE EJEMPLO DE RESPALDO
+    const defaultCases = [
+      {
+        filename: "AMGR_2025.json",
+        data: {
+          observacion: {
+            id: "ETNO-2025-AMGR",
+            estudioCaso: "Dificultad de Elección de Billetes en Cajero Automático",
+            situacion: "Mujer que quiere sacar dinero del banco mediante el cajero automático eligiendo el tipo de billete",
+            observador: "Angeles Ruiz",
+            donde: "Caixa Bank",
+            fecha: "2025-03-10",
+            ano: 2025,
+            duracion: "30 min (08:00 - 08:30)",
+            metodo: "observación directa",
+            explicacion: "El lunes una mujer de 54 años que no está habituada con la tecnología y que no usa el cajero del banco habitualmente fue a sacar dinero con su tarjeta bancaria. Puso la tarjeta en el lector para iniciar el cajero y comenzó a seguir las instrucciones. Había bastante cola y eso la incomodó porque le estaba costando encontrar la opción para escoger con qué tipo de billetes quería retirar su dinero. Finalmente tuvo que llamar a una persona del banco para que le ayudara a completar la transacción.",
+            frecuencia: "casual"
+          },
+          analisis: {
+            quien: { descripcion: "Mujer adulta de 54 años no habituada a cajeros.", etiquetas: ["mayor"] },
+            que: "Quiere sacar dinero eligiendo el tipo de billete.",
+            donde: "En Caixa Bank",
+            como: "Pone la tarjeta en el lector del cajero y sigue las instrucciones de la pantalla.",
+            porque: "Necesita el dinero para poder hacer la compra de la semana.",
+            queEstaSucediendo: "No encuentra la opción para escoger el tipo de billete ya que quiere unos en específico.",
+            sentimientos: ["frustración", "nerviosismo"],
+            factorCritico: "Interfaz confusa para gente poco habituada al uso de los cajeros.",
+            comoMejorar: "Poner las opciones más claras y con un lenguaje más sencillo."
+          },
+          evaluacion: {
+            total: 3,
+            val: 4.5,
+            clasificacion: 2.8,
+            observaciones: [
+              { observador: "Angeles Ruiz", valoracion: 5, clasificacion: 3, texto: "Caso sumamente crítico. La usabilidad del terminal bloquea a usuarios senior en horas de alta concurrencia." },
+              { observador: "Miguel Gea", valoracion: 4, clasificacion: 2.5, texto: "Interesante fricción de diseño. Requiere rediseño de interfaz en alto contraste." },
+              { observador: "Lucas Romero", valoracion: 4.5, clasificacion: 3, texto: "Impacto alto en la experiencia de cliente y tiempos de espera." }
+            ]
+          },
+          documentacionGrafica: [{ url: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=600&q=80", pie: "Cajero Automático CaixaBank" }],
+          palabrasClave: ["software", "hardware", "aparatos electrónicos"],
+          procesoDisenoMetodologia: {
+            inspiracion: { referentes: ["d.stanford Ethnography Fieldguide"], moodboardUrl: "https://mgea.github.io/UX-DIU-Checklist/index.html", palabraConcepto: "Accesibilidad en cajeros" },
+            metodologia: { marcoframing: "DIU Checklist", fasesProceso: ["Observación directa", "Análisis 5Ws"] },
+            herramientas: [{ categoria: "Recursos", items: ["d.school Fieldguide"] }]
+          }
+        }
+      },
+      {
+        filename: "AML_2025.json",
+        data: {
+          observacion: {
+            id: "ETNO-2025-AML",
+            estudioCaso: "Problemas de Uso en Cajas Automáticas de Tienda de Ropa (Lefties)",
+            situacion: "En una tienda del Nevada Shopping llamada Lefties, una señora tiene problemas para el cobro en la caja automática.",
+            observador: "Antonio Martínez Luque",
+            donde: "Nevada Shopping / Lefties",
+            fecha: "2025-03-07",
+            ano: 2025,
+            duracion: "1h 30min (11:00 - 12:30)",
+            metodo: "observación directa",
+            explicacion: "Una señora de unos 55 años estaba bloqueada ya que no entendía el funcionamiento de las cajas automáticas; además no había ningún empleado cerca hasta que pudo llamar la atención de uno para resolver el problema.",
+            frecuencia: "casual"
+          },
+          analisis: {
+            quien: { descripcion: "Mujer de 55 años con dificultades tecnológicas.", etiquetas: ["mayor"] },
+            que: "Pagar la ropa seleccionada.",
+            donde: "Cajas automáticas de Lefties",
+            como: "Llama a una empleada de la tienda para ser asistida.",
+            porque: "Desea comprar varias prendas de vestir.",
+            queEstaSucediendo: "No entiende por dónde pasar las prendas para que el escáner las detecte.",
+            sentimientos: ["estrés", "bloqueo"],
+            factorCritico: "Interfaz y zona de escaneo poco intuitivas para usuarios sénior.",
+            comoMejorar: "Mejorar la señalética física y disponer de un asistente de caja dedicado."
+          },
+          evaluacion: {
+            total: 2,
+            val: 4.8,
+            clasificacion: 3.0,
+            observaciones: [
+              { observador: "Antonio Martínez", valoracion: 5, clasificacion: 3, texto: "Provocó retención de más de 15 minutos en la cola de la tienda." },
+              { observador: "Elena Valenzuela", valoracion: 4.5, clasificacion: 3, texto: "Mala señalización del lector RFID/cesta de artículos." }
+            ]
+          },
+          documentacionGrafica: [{ url: "https://images.unsplash.com/photo-1556742049-0a670f4a4591?auto=format&fit=crop&w=600&q=80", pie: "Cajas de autoservicio en tienda" }],
+          palabrasClave: ["comercio", "software", "hardware", "señalética"],
+          procesoDisenoMetodologia: {
+            inspiracion: { referentes: ["DIU Framework"], moodboardUrl: "https://mgea.github.io/UX-DIU-Checklist/index.html", palabraConcepto: "Self-checkout en retail" },
+            metodologia: { marcoframing: "DIU Checklist", fasesProceso: ["Observación directa"] },
+            herramientas: [{ categoria: "Recursos", items: ["Formulario DIU"] }]
+          }
+        }
+      }
+    ];
+
+    window.addEventListener('DOMContentLoaded', () => {
+      browserCases = [...defaultCases];
+      currentData = browserCases[0].data;
+      renderProjectBrowser();
+    });
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    }
+
+    function showNotification(msg, type = 'info') {
+      const banner = document.getElementById('notification-banner');
+      banner.textContent = msg;
+      banner.className = `text-xs font-semibold px-4 py-2 text-center transition-flat ${type === 'error' ? 'bg-rose-600 text-white' : 'bg-[#D96B43] text-white'}`;
+      banner.classList.remove('hidden');
+      setTimeout(() => banner.classList.add('hidden'), 4000);
+    }
+
+    function resolveImageUrl(url) {
+      if (!url) return '';
+      const cleanUrl = String(url).trim().toLowerCase();
+      if (localImageMap[cleanUrl]) return localImageMap[cleanUrl];
+      const fileNameOnly = cleanUrl.split('/').pop();
+      if (localImageMap[fileNameOnly]) return localImageMap[fileNameOnly];
+      return url;
+    }
+
+    // GESTIÓN DE VER, EDITAR, VALIDAR Y EXPORTAR JSON
+    function openJsonModal() {
+      if (!currentData) currentData = defaultCases[0].data;
+      const modal = document.getElementById('json-modal');
+      const textarea = document.getElementById('json-modal-textarea');
+      textarea.value = JSON.stringify(currentData, null, 2);
+      validateJsonInput();
+      modal.classList.remove('hidden');
+    }
+
+    function closeJsonModal() {
+      document.getElementById('json-modal').classList.add('hidden');
+    }
+
+    function validateJsonInput() {
+      const textarea = document.getElementById('json-modal-textarea');
+      const indicator = document.getElementById('json-status-indicator');
+      try {
+        JSON.parse(textarea.value);
+        indicator.className = "font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200";
+        indicator.innerHTML = `<i class="fa-solid fa-check-circle"></i> JSON Válido`;
+        return true;
+      } catch (e) {
+        indicator.className = "font-bold text-rose-600 bg-rose-50 px-2.5 py-0.5 rounded border border-rose-200";
+        indicator.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Error de sintaxis JSON`;
+        return false;
+      }
+    }
+
+    function formatJsonText() {
+      const textarea = document.getElementById('json-modal-textarea');
+      try {
+        const parsed = JSON.parse(textarea.value);
+        textarea.value = JSON.stringify(parsed, null, 2);
+        validateJsonInput();
+      } catch (e) {
+        showNotification("No se puede formatear: el JSON contiene errores de sintaxis.", "error");
+      }
+    }
+
+    function applyJsonChanges() {
+      if (!validateJsonInput()) {
+        showNotification("Corrige los errores de sintaxis antes de aplicar.", "error");
+        return;
+      }
+      try {
+        const parsed = JSON.parse(document.getElementById('json-modal-textarea').value);
+        currentData = parsed;
+        loadCaseIntoVisualizer(currentData);
+        closeJsonModal();
+        showNotification("Ficha actualizada desde el editor JSON.", "success");
+      } catch (e) {
+        showNotification("Error al aplicar los cambios.", "error");
+      }
+    }
+
+    function exportCurrentJson() {
+      if (!currentData) {
+        showNotification("No hay ningún caso seleccionado para exportar.", "error");
+        return;
+      }
+      const filename = `${(currentData.observacion?.id || 'etnografia')}.json`;
+      const blob = new Blob([JSON.stringify(currentData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+      showNotification(`Exportado archivo "${filename}".`, "success");
+    }
+
+    // CARGA DE CARPETAS Y ARCHIVOS LOCALES
+    async function handleFolderSelect(event) {
+      const files = [...event.target.files];
+      localImageMap = {};
+
+      files.forEach(f => {
+        if (/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(f.name)) {
+          const blobUrl = URL.createObjectURL(f);
+          localImageMap[f.name.toLowerCase()] = blobUrl;
+          if (f.webkitRelativePath) localImageMap[f.webkitRelativePath.toLowerCase()] = blobUrl;
+        }
+      });
+
+      const jsonFiles = files.filter(f => f.name.toLowerCase().endsWith(".json"));
+      if (!jsonFiles.length) {
+        showNotification("No se encontraron archivos .json en la carpeta.", "error");
+        return;
+      }
+
+      const loaded = [];
+      for (const file of jsonFiles) {
+        try {
+          const data = JSON.parse(await file.text());
+          if (data && data.observacion) loaded.push({ data, filename: file.name });
+        } catch (_) {}
+      }
+
+      if (loaded.length) {
+        browserCases = loaded;
+        renderProjectBrowser();
+        showNotification(`Se cargaron ${loaded.length} casos e imágenes locales.`, "success");
+      }
+    }
+
+    async function handleSingleJsonSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      try {
+        const data = JSON.parse(await file.text());
+        if (data && data.observacion) {
+          browserCases.unshift({ data, filename: file.name });
+          renderProjectBrowser();
+          loadCaseIntoVisualizer(data);
+          showNotification(`Caso "${data.observacion.estudioCaso || file.name}" cargado.`, "success");
+        }
+      } catch (e) {
+        showNotification("Error al leer el archivo JSON.", "error");
+      }
+    }
+
+    // SISTEMA DE ESTRELLAS Y RELEVANCIA
+    function renderStarsHTML(rating) {
+      const val = Math.min(5, Math.max(0, parseFloat(rating) || 0));
+      const fullStars = Math.floor(val);
+      const hasHalfStar = (val - fullStars) >= 0.3 && (val - fullStars) <= 0.8;
+      const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+      let html = '';
+      for (let i = 0; i < fullStars; i++) html += '<i class="fa-solid fa-star"></i>';
+      if (hasHalfStar) html += '<i class="fa-solid fa-star-half-stroke"></i>';
+      for (let i = 0; i < emptyStars; i++) html += '<i class="fa-regular fa-star text-gray-300"></i>';
+      return html;
+    }
+
+    function getClasificacionBadge(clasifNum) {
+      const c = parseFloat(clasifNum) || 1;
+      if (c >= 2.5) return { text: 'Crítico', class: 'bg-rose-100 text-rose-800 border-rose-300' };
+      if (c >= 1.8) return { text: 'Destacable', class: 'bg-amber-100 text-amber-800 border-amber-300' };
+      return { text: 'No relevante', class: 'bg-gray-100 text-gray-700 border-gray-300' };
+    }
+
+    function showBrowserView() {
+      document.getElementById("view-project-browser").classList.remove("hidden");
+      document.getElementById("view-project-visualizer").classList.add("hidden");
+    }
+
+    function showVisualizerView() {
+      document.getElementById("view-project-browser").classList.add("hidden");
+      document.getElementById("view-project-visualizer").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+      // RENDERIZADO CATÁLOGO
+    function renderProjectBrowser() {
+      const container = document.getElementById("browser-cards");
+      container.innerHTML = "";
+
+      const search = (document.getElementById("browser-search")?.value || "").toLowerCase();
+      const personFilter = document.getElementById("browser-person-filter")?.value || "Todos";
+      const tagFilter = document.getElementById("browser-tag-filter")?.value || "Todas";
+      const yearFilter = document.getElementById("browser-year-filter")?.value || "Todos";
+      const sortMode = document.getElementById("browser-sort-filter")?.value || "val-desc";
+
+      let filtered = browserCases.filter(item => {
+        const obs = item.data.observacion || {};
+        const ana = item.data.analisis || {};
+        const kw = item.data.palabrasClave || [];
+        const tags = (ana.quien && Array.isArray(ana.quien.etiquetas)) ? ana.quien.etiquetas : [];
+
+        const matchSearch = !search || 
+          (obs.estudioCaso || "").toLowerCase().includes(search) || 
+          (obs.donde || "").toLowerCase().includes(search) ||
+          (obs.observador || "").toLowerCase().includes(search);
+
+        const matchPerson = personFilter === "Todos" || tags.includes(personFilter);
+        const matchTag = tagFilter === "Todas" || kw.includes(tagFilter);
+        const matchYear = yearFilter === "Todos" || String(obs.ano) === yearFilter;
+
+        return matchSearch && matchPerson && matchTag && matchYear;
+      });
+
+      filtered.sort((a, b) => {
+        const evA = a.data.evaluacion || {};
+        const evB = b.data.evaluacion || {};
+        const obsA = a.data.observacion || {};
+        const obsB = b.data.observacion || {};
+
+        if (sortMode === "val-desc") return (evB.val || 0) - (evA.val || 0);
+        if (sortMode === "val-asc") return (evA.val || 0) - (evB.val || 0);
+        if (sortMode === "clasif-desc") return (evB.clasificacion || 0) - (evA.clasificacion || 0);
+        return (obsB.ano || 0) - (obsA.ano || 0);
+      });
+
+      if (!filtered.length) {
+        container.innerHTML = `
+          <div class="col-span-full bg-white p-8 text-center rounded-2xl border border-[#DFCFC0]">
+            <i class="fa-solid fa-folder-open text-3xl text-gray-400 mb-2"></i>
+            <p class="text-xs font-bold text-gray-600">No se encontraron observaciones etnográficas que coincidan con los filtros.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const d = item.data;
+        const obs = d.observacion || {};
+        const ev = d.evaluacion || { val: 0, clasificacion: 1 };
+        const clasifBadge = getClasificacionBadge(ev.clasificacion);
+        
+        // DECLARACIÓN DE VARIABLES DE PALABRAS CLAVE (CORRIGE EL ERROR DE REFERENCIA)
+        const keywords = d.palabrasClave || [];
+        const keywordsHTML = keywords.map(k => 
+          `<span class="text-[9px] font-bold bg-[#E8E2D5] text-[#1A1A1A] px-1.5 py-0.5 rounded border border-black/10">#${escapeHTML(k)}</span>`
+        ).join(' ');
+
+        const card = document.createElement("article");
+        card.className = "bg-[#FAF8F5] border border-[#DFCFC0] rounded-2xl overflow-hidden shadow-xs hover:shadow-md hover:border-[#D96B43] transition-flat flex flex-col p-5 space-y-3";
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between border-b border-[#DFCFC0] pb-2">
+            <span class="text-xs font-mono font-bold text-[#D96B43]">${escapeHTML(obs.id || 'ETNO')}</span>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${clasifBadge.class}">${clasifBadge.text}</span>
+              <span class="text-xs font-bold text-gray-600 bg-[#E8E2D5] px-2 py-0.5 rounded-full">${escapeHTML(obs.ano || '2026')}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-1">
+            <div class="text-[#D96B43] text-xs">${renderStarsHTML(ev.val)}</div>
+            <span class="text-xs font-extrabold text-gray-800">${(ev.val || 0).toFixed(1)} / 5.0</span>
+          </div>
+
+          <h3 class="font-display font-bold text-base sm:text-lg leading-tight text-[#1A1A1A]">${escapeHTML(obs.estudioCaso || 'Estudio Etnográfico')}</h3>
+          <p class="text-xs text-gray-600 leading-relaxed line-clamp-2">${escapeHTML(obs.situacion || '')}</p>
+
+          <div class="flex flex-wrap gap-1 py-1">
+            ${keywordsHTML || '<span class="text-[10px] text-gray-400 italic">Sin palabras clave</span>'}
+          </div>
+
+          <div class="pt-2 border-t border-[#DFCFC0]/60 text-[11px] text-gray-500 space-y-1">
+            <div><strong class="text-gray-700">Lugar:</strong> ${escapeHTML(obs.donde || '--')}</div>
+            <div><strong class="text-gray-700">Observador:</strong> ${escapeHTML(obs.observador || '--')}</div>
+          </div>
+
+          <button class="open-case-btn w-full mt-auto bg-[#1A1A1A] hover:bg-[#D96B43] text-white font-bold text-xs py-2.5 px-3 rounded-xl transition-flat flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-folder-open"></i> Abrir Caso
+          </button>
+        `;
+
+        card.querySelector('.open-case-btn').onclick = () => loadCaseIntoVisualizer(d);
+        container.appendChild(card);
+      });
+    }
+
+
+
+
+
+    // CARGA DE CASO EN EL VISUALIZADOR DETALLADO
+    function loadCaseIntoVisualizer(data) {
+      currentData = data;
+      const obs = data.observacion || {};
+      const ana = data.analisis || {};
+      const proc = data.procesoDisenoMetodologia || {};
+
+      document.getElementById('ethno-id-badge').textContent = `ID: ${obs.id || 'ETNO-2026'}`;
+      document.getElementById('ethno-estudio-caso').textContent = obs.estudioCaso || 'Estudio de Caso Etnográfico';
+      document.getElementById('ethno-situacion').textContent = obs.situacion || '--';
+      document.getElementById('ethno-observador').textContent = obs.observador || '--';
+      document.getElementById('ethno-donde').textContent = obs.donde || '--';
+      document.getElementById('ethno-fecha').textContent = obs.fecha || '--/--/----';
+      document.getElementById('ethno-duracion').textContent = obs.duracion || '--';
+      document.getElementById('ethno-metodo').textContent = obs.metodo || '--';
+      document.getElementById('ethno-frecuencia').textContent = obs.frecuencia || '--';
+      document.getElementById('ethno-explicacion').textContent = obs.explicacion || '--';
+
+      const qObj = ana.quien || {};
+      document.getElementById('ethno-quien').textContent = typeof qObj === 'object' ? (qObj.descripcion || '--') : qObj;
+      
+      const tagsContainer = document.getElementById('ethno-quien-tags');
+      tagsContainer.innerHTML = '';
+      if (typeof qObj === 'object' && Array.isArray(qObj.etiquetas)) {
+        qObj.etiquetas.forEach(t => {
+          tagsContainer.innerHTML += `<span class="text-[10px] font-bold bg-[#E8E2D5] text-[#1A1A1A] px-2 py-0.5 rounded-md border border-black/10">#${escapeHTML(t)}</span>`;
+        });
+      }
+
+      // Keywords
+
+      /*
+      const kwContainer = document.getElementById('ethno-palabras-clave-container');
+      if (kwContainer) {
+        kwContainer.innerHTML = '';
+        const keywords = data.palabrasClave || [];
+        if (keywords.length) {
+          keywords.forEach(k => {
+            kwContainer.innerHTML += `<span class="text-xs font-bold bg-[#1A1A1A] text-white px-2.5 py-1 rounded-md">#${escapeHTML(k)}</span>`;
+          });
+        } else {
+          kwContainer.innerHTML = '<span class="text-xs text-gray-400 italic">No hay palabras clave registradas.</span>';
+        }
+      }
+*/
+
+
+
+      document.getElementById('ethno-que').textContent = ana.que || '--';
+      document.getElementById('ethno-analisis-donde').textContent = ana.donde || '--';
+      document.getElementById('ethno-como').textContent = ana.como || '--';
+      document.getElementById('ethno-porque').textContent = ana.porque || '--';
+
+      const sentContainer = document.getElementById('ethno-sentimientos');
+      sentContainer.innerHTML = '';
+      (ana.sentimientos || []).forEach(s => {
+        sentContainer.innerHTML += `<span class="text-xs font-bold bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-300">${escapeHTML(s)}</span>`;
+      });
+
+      document.getElementById('ethno-factor-critico').textContent = ana.factorCritico || '--';
+      document.getElementById('ethno-como-mejorar').textContent = ana.comoMejorar || '--';
+
+      renderEvaluacionSection(data.evaluacion);
+      renderGallery(data.documentacionGrafica || []);
+
+      const insp = proc.inspiracion || {};
+      const met = proc.metodologia || {};
+      document.getElementById('ethno-palabra-concepto').textContent = insp.palabraConcepto || '--';
+      const refLink = document.getElementById('ethno-referente-url');
+      refLink.textContent = insp.moodboardUrl || '--';
+      refLink.href = insp.moodboardUrl || '#';
+
+      document.getElementById('ethno-marco-framing').textContent = met.marcoframing || '--';
+
+      const fasesList = document.getElementById('ethno-fases-list');
+      fasesList.innerHTML = '';
+      (met.fasesProceso || []).forEach(f => {
+        fasesList.innerHTML += `<li>${escapeHTML(f)}</li>`;
+      });
+
+      const herramList = document.getElementById('ethno-herramientas-list');
+      herramList.innerHTML = '';
+      (proc.herramientas || []).forEach(h => {
+        herramList.innerHTML += `
+          <div>
+            <strong class="text-gray-500 block text-[10px] uppercase">${escapeHTML(h.categoria)}:</strong>
+            <p class="font-medium">${escapeHTML((h.items || []).join(', '))}</p>
+          </div>
+        `;
+      });
+
+      showVisualizerView();
+    }
+
+    // RENDERIZADO DE EVALUACIONES
+    function renderEvaluacionSection(evalData) {
+      const ev = evalData || { total: 0, val: 0, clasificacion: 1, observaciones: [] };
+      const obsList = ev.observaciones || [];
+      const totalObs = ev.total || obsList.length;
+
+      document.getElementById('ethno-eval-val-num').textContent = (ev.val || 0).toFixed(1);
+      document.getElementById('ethno-eval-stars').innerHTML = renderStarsHTML(ev.val);
+      
+      const clasifObj = getClasificacionBadge(ev.clasificacion);
+      const badgeEl = document.getElementById('ethno-eval-clasif-badge');
+      badgeEl.textContent = clasifObj.text;
+      badgeEl.className = `text-xs font-bold px-2.5 py-1 rounded-md border ${clasifObj.class}`;
+      
+      document.getElementById('ethno-eval-clasif-num').textContent = `Media: ${(ev.clasificacion || 1).toFixed(1)} / 3.0`;
+      document.getElementById('ethno-eval-count').textContent = totalObs;
+      document.getElementById('ethno-eval-total-badge').textContent = `${totalObs} Revisiones`;
+
+      const listContainer = document.getElementById('ethno-eval-list');
+      listContainer.innerHTML = '';
+
+      if (!obsList.length) {
+        listContainer.innerHTML = '<p class="text-xs text-gray-500 italic p-3 bg-white rounded-lg border">No hay evaluaciones registradas para este caso.</p>';
+        return;
+      }
+
+      obsList.forEach((obs, idx) => {
+        const card = document.createElement('div');
+        card.className = 'bg-white p-4 rounded-xl border border-[#DFCFC0] space-y-2 shadow-xs';
+        const cObj = getClasificacionBadge(obs.clasificacion);
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-[#1A1A1A] text-white text-[10px] font-bold flex items-center justify-center">${idx + 1}</span>
+              <span class="font-bold text-xs text-[#1A1A1A]">${escapeHTML(obs.observador)}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${cObj.class}">${cObj.text}</span>
+              <span class="text-xs text-[#D96B43]">${renderStarsHTML(obs.valoracion)}</span>
+              <span class="text-xs font-bold text-gray-700 font-mono">(${parseFloat(obs.valoracion).toFixed(1)})</span>
+            </div>
+          </div>
+          <p class="text-xs text-gray-800 leading-relaxed pt-1">${escapeHTML(obs.texto)}</p>
+        `;
+        listContainer.appendChild(card);
+      });
+    }
+
+    // RENDERIZADO GALERÍA CON SUBIDA LOCAL
+    function renderGallery(images) {
+      const container = document.getElementById('ethno-galeria-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const uploadBtn = document.createElement('div');
+      uploadBtn.className = 'bg-white border-2 border-dashed border-[#DFCFC0] hover:border-[#D96B43] rounded-xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-flat min-h-[200px] group';
+      uploadBtn.innerHTML = `
+        <i class="fa-solid fa-image-user text-3xl text-gray-400 group-hover:text-[#D96B43] mb-2 transition-colors"></i>
+        <span class="text-xs font-bold text-gray-700 group-hover:text-[#1A1A1A]">Añadir imagen local</span>
+        <span class="text-[10px] text-gray-400 mt-1">Sube una foto desde tu equipo</span>
+        <input type="file" accept="image/*" class="hidden" id="local-img-uploader">
+      `;
+      
+      uploadBtn.onclick = () => uploadBtn.querySelector('#local-img-uploader').click();
+      
+      uploadBtn.querySelector('#local-img-uploader').addEventListener('change', (e) => {
+        if (e.target.files.length) {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            if (!currentData.documentacionGrafica) currentData.documentacionGrafica = [];
+            currentData.documentacionGrafica.push({
+              url: event.target.result,
+              pie: file.name
+            });
+            renderGallery(currentData.documentacionGrafica);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      container.appendChild(uploadBtn);
+
+      images.forEach((img, idx) => {
+        const card = document.createElement('div');
+        card.className = 'bg-white border border-[#DFCFC0] rounded-xl overflow-hidden shadow-xs p-3 space-y-2 flex flex-col justify-between relative group';
+        
+        const finalSrc = resolveImageUrl(img.url);
+        const pieTexto = img.pie || `Evidencia ${idx + 1}`;
+
+        card.innerHTML = `
+          <div class="w-full bg-[#1A1A1A]/5 rounded-lg overflow-hidden flex items-center justify-center p-1 relative min-h-[180px] max-h-[300px]">
+            <img src="${escapeHTML(finalSrc)}" 
+                 alt="${escapeHTML(pieTexto)}" 
+                 class="w-auto h-auto max-w-full max-h-[290px] object-contain rounded"
+                 onerror="this.onerror=null;this.src='https://placehold.co/600x400/E8E2D5/1A1A1A?text=Evidencia+'+(${idx+1});">
+          </div>
+
+          <div class="flex items-center justify-between gap-2 pt-1 border-t border-[#DFCFC0]/50">
+            <p class="text-xs text-gray-700 italic truncate font-medium flex-grow">${escapeHTML(pieTexto)}</p>
+            <button onclick="openImageModal('${escapeHTML(finalSrc)}', '${escapeHTML(pieTexto)}')" 
+                    class="bg-[#E8E2D5] hover:bg-[#D96B43] text-[#1A1A1A] hover:text-white px-2.5 py-1.5 rounded-md text-xs font-bold transition-flat flex items-center gap-1.5 shrink-0"
+                    title="Ver a tamaño completo">
+              <i class="fa-solid fa-expand"></i>
+              <span class="hidden sm:inline">Ver grande</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function openImageModal(url, caption) {
+      const modal = document.getElementById('image-modal');
+      const modalImg = document.getElementById('modal-image');
+      const modalCap = document.getElementById('modal-caption');
+
+      if (modal && modalImg) {
+        modalImg.src = url;
+        modalCap.textContent = caption || '';
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById('image-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeImageModal();
+        closeJsonModal();
+      }
+    });
+
+    function printBrowserCatalog() {
+      showBrowserView();
+
+      const person = document.getElementById("browser-person-filter")?.value || "Todos";
+      const tag = document.getElementById("browser-tag-filter")?.value || "Todas";
+      const year = document.getElementById("browser-year-filter")?.value || "Todos";
+      const search = document.getElementById("browser-search")?.value || "";
+
+      let printHeader = document.getElementById("print-catalog-header");
+      if (!printHeader) {
+        printHeader = document.createElement("div");
+        printHeader.id = "print-catalog-header";
+        printHeader.className = "browser-print-header hidden";
+        const browserContainer = document.getElementById("view-project-browser");
+        browserContainer.insertBefore(printHeader, browserContainer.firstChild);
+      }
+
+      printHeader.innerHTML = `
+        <div class="flex items-center gap-3">
+          <img src="logo_diu25_mini.png" alt="DIU Logo" class="h-8 w-auto object-contain" onerror="this.style.display='none';">
+          <div class="font-display font-bold text-base text-[#1A1A1A]">EtnograUX — Catálogo de Casos Etnográficos</div>
+        </div>
+        <div class="text-[10px] text-gray-700 font-medium">
+          <span>Filtros: </span>
+          <strong>Perfil:</strong> ${escapeHTML(person)} | 
+          <strong>Categoría:</strong> ${escapeHTML(tag)} | 
+          <strong>Año:</strong> ${escapeHTML(year)} 
+          ${search ? `| <strong>Búsqueda:</strong> "${escapeHTML(search)}"` : ''}
+        </div>
+      `;
+
+      setTimeout(() => window.print(), 150);
+    }
+  </script>
+</body>
+</html>

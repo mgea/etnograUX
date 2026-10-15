@@ -1,0 +1,82 @@
+{
+  "observacion": {
+    "id": "ETNO-2026-001",
+    "estudioCaso": "Dificultad de Compra de Billetes en Máquina Autoventa de Tranvía",
+    "situacion": "Un usuario intenta comprar un billete sencillo durante la hora punta con maletas y niños pequeños.",
+    "observador": "Miguel Gea",
+    "donde": "Estación de Tranvía Parada Recogidas, Granada",
+    "fecha": "2026-03-14",
+    "ano": 2026,
+    "duracion": "18 min (10:15 - 10:33)",
+    "metodo": "observación directa",
+    "explicacion": "Se observa a un viajero tratando de seleccionar la tarifa reducida en la pantalla táctil de la expendedora automática. La pantalla presenta deslumbramiento por el sol directo, lo que fuerza al usuario a inclinarse y realizar varios intentos fallidos. Además, la ranura de pago con tarjeta no emite señal luminosa clara, provocando confusión e impaciencia en la cola posterior.",
+    "frecuencia": "frecuentemente"
+  },
+  "analisis": {
+    "quien": {
+      "descripcion": "Turista nacional de mediana edad acompañado de su familia con dos maletas grandes.",
+      "etiquetas": [
+        "mayor",
+        "extranjero"
+      ]
+    },
+    "que": "Comprar rápidamente cuatro billetes sencillos antes de que llegue el próximo tranvía en 3 minutos.",
+    "donde": "Frente a la pantalla de la máquina expendedora en la zona descubierta del andén.",
+    "como": "El sol incide directamente sobre la pantalla TFT generando reflejos que impiden leer el menú contextual de billetes infantiles.",
+    "porque": "Falta de visera física en la máquina expendedora y bajo contraste cromático de la interfaz del software.",
+    "queEstaSucediendo": "El diseño de la interfaz física y digital no contempla las condiciones de iluminación ambiental extrema ni la presión temporal del usuario con equipaje.",
+    "sentimientos": [
+      "enfado",
+      "estrés",
+      "impaciencia"
+    ],
+    "factorCritico": "Legibilidad nula del terminal bajo luz solar directa y tiempo de respuesta elevado del software por toque táctil.",
+    "comoMejorar": "Instalar viseras antirreflectantes en los terminales, elevar el contraste del software a modo alto contraste dinámico y simplificar el flujo a '1 toque para billete estándar'."
+  },
+  "documentacionGrafica": [
+    {
+      "url": "https://images.unsplash.com/photo-1556742049-0a670f4a4591?auto=format&fit=crop&w=600&q=80",
+      "pie": "Interfaz de la máquina bajo luz solar directa"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80",
+      "pie": "Cola de usuarios esperando en el andén"
+    }
+  ],
+  "palabrasClave": [
+    "transporte",
+    "señalética",
+    "software", "hardware",
+    "aparatos electrónicos"
+  ],
+  "procesoDisenoMetodologia": {
+    "inspiracion": {
+      "referentes": [
+        "Etnografía rápida de diseño (Quick Ethnography)",
+        "Método de Observación Sombra (Shadowing)",
+        "Evaluación Heurística de Accesibilidad de Nielson en exteriores"
+      ],
+      "moodboardUrl": "https://pinterest.com",
+      "palabraConcepto": "Análisis del punto de fricción (Pain Point) en entornos urbanos no controlados."
+    },
+    "metodologia": {
+      "marcoframing": "Human-Centered Design (HCD) & Contextual Inquiry",
+      "fasesProceso": [
+        "Observación no participante en punto de flujo de viajeros",
+        "Toma de notas de campo cronometradas",
+        "Mapeo de emociones y factores críticos",
+        "Redacción de propuestas de rediseño heurístico"
+      ]
+    },
+    "herramientas": [
+      {
+        "categoria": "Registro de Campo",
+        "items": ["Cuaderno de notas analógico", "Cámara fotográfica", "Cronómetro"]
+      },
+      {
+        "categoria": "Análisis & Sintesis",
+        "items": ["Mapeo de Emociones", "Ficha JSON EtnoBuilder", "Miro"]
+      }
+    ]
+  }
+}
