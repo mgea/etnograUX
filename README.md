@@ -8,7 +8,13 @@ CC BY Miguel Gea, v1.0 15/10/2026
 
 
 
-**EtnograUX** (basado en la asignatura de *Diseño de Interfaces de Usuario* de la Universidad de Granada) es una herramienta web ligera, independiente y basada en estándares web (*Flat Design*, Tailwind CSS y JavaScript Plain) para la gestión, visualización, análisis cualitativo, validación y exportación de estudios etnográficos de campo aplicados al Diseño de Interacción y Experiencia de Usuario (UX).
+**EtnograUX** (basado en la asignatura de  [*Diseño de Interfaces de Usuario*](https://github.com/mgea/DIU)  de la Universidad de Granada) es una herramienta web ligera, independiente y basada en estándares web (*Flat Design*, Tailwind CSS y JavaScript) para la gestión, visualización, análisis cualitativo, validación y exportación de estudios etnográficos de campo aplicados al Diseño de Interacción y Experiencia de Usuario (UX).
+
+Ámbito: **Usabilidad & Evaluación**
+
+Método de Evaluación: **Indagación** ->  **observación** (Field Studies)  (ref: [NNGroup](https://www.nngroup.com/articles/guide-ux-research-methods/))
+
+
 
 
 
@@ -29,10 +35,6 @@ CC BY Miguel Gea, v1.0 15/10/2026
   - **Catálogo:** Rejilla espaciosa de **3 columnas x 3 filas** (9 proyectos por folio) con los filtros activos e identificadores.
   
   
-
-
-
-
 
 ## Estructura del Archivo JSON (`etnografia.json`)
 
@@ -70,11 +72,62 @@ Cada estudio de caso etnográfico se estructura en un único archivo JSON con la
   "evaluacion": {
     "total": 3,
     "val": 4.5,
-    "clas
+    "clasificacion": 2.8,
+    "observaciones": [
+      {
+        "observador": "Elena Valenzuela",
+        "valoracion": 5,
+        "clasificacion": 3,
+        "texto": "Caso crítico. Bloquea el flujo en horas de alta concurrencia."
+      },
+      {
+        "observador": "Miguel Gea",
+        "valoracion": 4,
+        "clasificacion": 2.5,
+        "texto": "Requiere rediseño de interfaz táctil."
+      }
+    ]
+  },
+  "documentacionGrafica": [
+    {
+      "url": "logo_diu25_mini.png",
+      "pie": "Fotografía del terminal de cajero"
+    }
+  ],
+  "palabrasClave": ["software", "hardware", "comercio"],
+  "procesoDisenoMetodologia": {
+    "inspiracion": {
+      "referentes": ["d.stanford Ethnography Fieldguide"],
+      "moodboardUrl": "[https://mgea.github.io/UX-DIU-Checklist/index.html](https://mgea.github.io/UX-DIU-Checklist/index.html)",
+      "palabraConcepto": "Accesibilidad en cajeros"
+    },
+    "metodologia": {
+      "marcoframing": "DIU Checklist",
+      "fasesProceso": ["Observación directa", "Análisis 5Ws"]
+    },
+    "herramientas": [
+      {
+        "categoria": "Recursos",
+        "items": ["Formulario DIU", "d.school Fieldguide"]
+      }
+    ]
+  }
+}
 ```
 
 
 
 
+
+#### Referencias: 
+
+- NNGroup. A Guide to Using User-Experience Research Methods. https://www.nngroup.com/articles/guide-ux-research-methods/ 
+- IxDF - Interaction Design Foundation. (2016, November 8). What is Ethnographic Research?. IxDF - Interaction Design Foundation. https://ixdf.org/literature/topics/ethnographic-research 
+- Ethnography in UX research[ https://www.userinterviews.com/ux-research-field-guide-chapter/ethnography](https://www.userinterviews.com/ux-research-field-guide-chapter/ethnography)
+- d.school: Ethnography Field Guide  https://dschool.stanford.edu/tools/ethnography-field-guide
+
+
+
+Código enhanced by GeminiAI
 
 Granada, 15 octubre 2026 
